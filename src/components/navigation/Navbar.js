@@ -1,9 +1,9 @@
-"use-client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
-import { useDebounce } from "@/hooks/use-debounce";
+import useDebounce from "@/hooks/useDebounce";
 
 export default function Navbar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
