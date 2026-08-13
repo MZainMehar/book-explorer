@@ -26,13 +26,13 @@ export default function Navbar({ onSearch }) {
           </p>
         </a>
 
-        <nav className="hidden flex-1 justify-center md:flex">
+        {/* <nav className="hidden flex-1 justify-center md:flex">
           <span className="text-base font-medium tracking-wide text-stone-600">
             Discover your next great read
           </span>
-        </nav>
+        </nav> */}
 
-        <div className="relative ml-auto w-full max-w-sm">
+        <div className="relative ml-auto w-[260px] sm:w-[300px]">
           <Search
             size={17}
             strokeWidth={1.8}
