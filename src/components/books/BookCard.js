@@ -19,11 +19,15 @@ export default function BookCard({ book }) {
       </div>
 
       <div className="p-4">
-        <p className="truncate text-xs text-stone-500">by {book.author}</p>
-
         <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-stone-900">
           {book.title}
         </h3>
+
+        <p className="truncate text-xs text-stone-500">by {book.author}</p>
+
+        {book.publishedYear && (
+          <p className="mt-1 text-xs text-stone-400">{book.publishedYear}</p>
+        )}
 
         <div className="mt-3 flex items-center justify-between gap-2">
           {book.rating !== null ? (
@@ -35,7 +39,7 @@ export default function BookCard({ book }) {
               </span>
             </div>
           ) : (
-            <span className="text-xs text-stone-400">No rating</span>
+            <span className="text-xs text-stone-400">Not rated</span>
           )}
 
           {book.ratingsCount > 0 && (

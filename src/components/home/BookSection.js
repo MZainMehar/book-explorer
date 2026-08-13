@@ -1,24 +1,52 @@
+"use client";
+
+import { useState } from "react";
 import BookGrid from "@/components/books/BookGrid";
 import BookGridSkeleton from "@/components/books/BookGridSkeleton";
+import BookSort from "@/components/books/BookSort";
 
 export default function BookSection({ books, loading, error, query }) {
+  const [sortBy, setSortBy] = useState("relevance");
+
+  const sortedBooks = [...books].sort((a, b) => {
+    if (sortBy === "rating") {
+      return (b.rating ?? -1) - (a.rating ?? -1);
+    }
+
+    if (sortBy === "newest") {
+      return (b.publishedYear ?? 0) - (a.publishedYear ?? 0);
+    }
+
+    if (sortBy === "oldest") {
+      return (a.publishedYear ?? Infinity) - (b.publishedYear ?? Infinity);
+    }
+
+    return 0;
+  });
+
   return (
     <section
       id="explore"
-      className="mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-16"
+      className="scroll-mt-20 mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-16"
     >
-      <div className="mb-8">
-        <div className="h-1 w-10 rounded-full bg-amber-500" />
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="h-1 w-10 rounded-full bg-amber-500" />
 
-        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">
-          {query ? `Search results for "${query}"` : "Popular Books"}
-        </h2>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">
+            {query ? `Search results for "${query}"` : "Popular Books"}
+          </h2>
 
-        <p className="mt-2 text-sm text-stone-500">
-          {query
-            ? "Books matching your search."
-            : "Explore books from the Open Library."}
-        </p>
+          <p className="mt-2 text-sm text-stone-500">
+            {query
+              ? "Books matching your search."
+              : "Explore books from the Open Library."}
+          </p>
+        </div>
+
+        {!loading && !error && books.length > 0 && (
+          <BookSort value={sortBy} onChange={setSortBy} />
+        )}
       </div>
 
       {error ? (
@@ -29,8 +57,16 @@ export default function BookSection({ books, loading, error, query }) {
         </div>
       ) : loading ? (
         <BookGridSkeleton />
+      ) : books.length === 0 ? (
+        <div className="rounded-xl border border-stone-200 bg-white px-6 py-10 text-center">
+          <h3 className="font-medium text-stone-900">No books found</h3>
+
+          <p className="mt-1 text-sm text-stone-500">
+            Try searching for a different book or author.
+          </p>
+        </div>
       ) : (
-        <BookGrid books={books} />
+        <BookGrid books={sortedBooks} />
       )}
     </section>
   );

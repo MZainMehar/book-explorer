@@ -27,12 +27,9 @@ export default function Navbar({ onSearch }) {
         </a>
 
         <nav className="hidden flex-1 justify-center md:flex">
-          <a
-            href="#explore"
-            className="text-sm text-stone-700 transition hover:text-stone-950"
-          >
-            Explore Books
-          </a>
+          <span className="text-base font-medium tracking-wide text-stone-600">
+            Discover your next great read
+          </span>
         </nav>
 
         <div className="relative ml-auto w-full max-w-sm">
